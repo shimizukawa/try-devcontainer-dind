@@ -18,7 +18,7 @@ ARG USERNAME=automatic
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 # Copy library scripts to execute
-COPY library-scripts/*.sh library-scripts/*.env /tmp/library-scripts/
+COPY .devcontainer/library-scripts/*.sh .devcontainer/library-scripts/*.env /tmp/library-scripts/
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     # Remove imagemagick due to https://security-tracker.debian.org/tracker/CVE-2019-10131
