@@ -1,0 +1,37 @@
+server_tokens off;
+charset UTF-8;
+resolver ${NGINX_ROUTER_RESOLVER_IP_ADDRESS};
+
+server {
+    listen       443 ssl;
+    listen  [::]:443 ssl;
+    keepalive_timeout   60;
+    ssl_certificate     certs/local.freia.jp/fullchain.pem;
+    ssl_certificate_key certs/local.freia.jp/privkey.pem;
+    ssl_protocols       TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5:!SHA;
+
+    proxy_http_version                  1.1;
+    proxy_set_header X-Real-IP          $remote_addr;
+    proxy_set_header X-Forwarded-Host   $host;
+    proxy_set_header X-Forwarded-Server $host;
+    proxy_set_header X-Forwarded-For    127.0.0.1;
+    proxy_set_header X-Forwarded-Proto  $scheme;
+    proxy_set_header Referer            $http_referer;
+    proxy_set_header X-Forwarded-Port   $server_port;
+    proxy_set_header Host               $http_host;
+    proxy_set_header Connection         $http_connection;
+    proxy_set_header Upgrade            $http_upgrade;
+
+    root /var/lib/nginx/html;
+
+    location /api {
+        proxy_pass http://${NGINX_ROUTER_BACKEND_HOST};
+    }
+    location /dev {
+        proxy_pass http://${NGINX_ROUTER_BACKEND_HOST};
+    }
+    location / {
+        proxy_pass http://${NGINX_ROUTER_FRONTEND_HOST};
+    }
+}

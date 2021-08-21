@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+  backend:
+    image: try-devcontainer-dind/backend:latest
+    build:
+      context: ./backend
+      dockerfile: ./docker/Dockerfile
+    env_file:
+      - .env
+    environment:
+      DB_NAME: admin
+      DB_USER: admin
+      DB_PASSWORD: admin
+      DB_HOST: db
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - db
+      - frontend
+    command: sh -c "python apps/manage.py runserver 0.0.0.0:8000"
+    tty: true
+    stdin_open: true
+
+  frontend:
+    image: try-devcontainer-dind/frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: docker/Dockerfile
+    env_file:
+      - .env
+    volumes:
+     - ./frontend:/frontend
+    tty: true
+
+  db:
+    image: postgres:11
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: admin
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/scripts:/scripts
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+
+  nginx:
+    image: try-devcontainer-dind/nginx:latest
+    build:
+      context: ./nginx
+    environment:
+      NGINX_ROUTER_RESOLVER_IP_ADDRESS: 127.0.0.11
+      NGINX_ROUTER_BACKEND_HOST: backend:8000
+      NGINX_ROUTER_FRONTEND_HOST: frontend:3000
+    volumes:
+      - ./certs:/etc/nginx/certs/local.freia.jp
+    ports:
+      - 443:443
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      default:
+        aliases:
+          - local.freia.jp
+
+volumes:
+  db_data:
