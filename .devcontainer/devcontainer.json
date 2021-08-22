@@ -43,8 +43,8 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [ 443 ],
 	"portsAttributes": {
-		"443": {
-			 "label": "HTTPS",
+		"4443": {
+			 "label": "HTTPS Mac",
 		},
 	 },
 

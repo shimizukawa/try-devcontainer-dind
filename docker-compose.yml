@@ -19,8 +19,6 @@ services:
       - db
       - frontend
     command: sh -c "python apps/manage.py runserver 0.0.0.0:8000"
-    ports:
-      - 8000:8000
     tty: true
     stdin_open: true
 
@@ -34,8 +32,6 @@ services:
     volumes:
      - ./frontend:/frontend
     command: sh -c "npm start"
-    ports:
-      - 3000:3000
     tty: true
 
   db:
