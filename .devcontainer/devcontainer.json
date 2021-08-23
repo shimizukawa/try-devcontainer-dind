@@ -1,7 +1,7 @@
 {
 	"name": "Docker in Docker",
 	"image": "ghcr.io/beproud/try-devcontainer-dind/devcontainer:latest",
-	// "image": "ghcr.io/${ localEnv:GITHUB_REPOSITORY }/devcontainer:latest",
+	// "image": "ghcr.io/${localEnv:RepositoryName}${localEnv:REPOSITORY_NAME}/devcontainer:latest",
 	// "build": {
 	// 	"dockerfile": "Dockerfile",
 	// 	"context": "..",
