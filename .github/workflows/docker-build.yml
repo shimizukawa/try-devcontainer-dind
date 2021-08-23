@@ -33,6 +33,6 @@ jobs:
             PYTHON_VERSION=3.9
             NODE_VERSION=14
           push: true
-          tags: ghcr.io/${{ github.repository }}-devcontainer:latest
+          tags: ghcr.io/${{ github.repository }}/devcontainer:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
