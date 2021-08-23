@@ -28,4 +28,4 @@ jobs:
           context: .
           file: .devcontainer/Dockerfile
           # push: true
-          tags: $GITHUB_REPOSITORY:latest
+          tags: "shimizukawa/trydevcontainer:latest"
