@@ -12,7 +12,7 @@
 				"NODE_VERSION": "14",
 		},
 		"cacheFrom": [
-			"docker.io/python:3.9-buster",
+			"docker.io/library/python:3.9-buster",
 		]
 	},
 	"runArgs": ["--init", "--privileged"],
