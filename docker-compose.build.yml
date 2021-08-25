@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      cache_from:
+        - ghcr.io/beproud/try-devcontainer-dind/backend:latest
+
+  frontend:
+    build:
+      cache_from:
+        - ghcr.io/beproud/try-devcontainer-dind/frontend:latest
+
+  nginx:
+    build:
+      cache_from:
+        - ghcr.io/beproud/try-devcontainer-dind/nginx:latest
