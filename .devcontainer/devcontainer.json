@@ -14,6 +14,11 @@
 	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
 	"overrideCommand": false,
 	
+	// env
+	"containerEnv": {
+		"DOCKER_BUILDKIT": "1",
+	},
+
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
 		"python.pythonPath": "/usr/local/bin/python",
