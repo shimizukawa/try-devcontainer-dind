@@ -31,8 +31,8 @@ jobs:
           file: ./backend/docker/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}/backend:latest
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/backend:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/backend:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/backend:latest
+          cache-to: type=inline
 
       - name: Build and push (frontend)
         uses: docker/build-push-action@v2
@@ -41,8 +41,8 @@ jobs:
           file: ./frontend/docker/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}/frontend:latest
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/frontend:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/frontend:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/frontend:latest
+          cache-to: type=inline
 
       - name: Build and push (nginx)
         uses: docker/build-push-action@v2
@@ -51,8 +51,8 @@ jobs:
           file: ./nginx/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}/nginx:latest
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/nginx:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/nginx:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/nginx:latest
+          cache-to: type=inline
 
       - name: Build and push (devcontainer)
         uses: docker/build-push-action@v2
