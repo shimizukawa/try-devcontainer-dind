@@ -14,14 +14,17 @@
 	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
 	"overrideCommand": false,
 	
-	// env
 	"containerEnv": {
+		// BuildKitについて https://qiita.com/tatsurou313/items/ad86da1bb9e8e570b6fa
 		"DOCKER_BUILDKIT": "1",
 		"COMPOSE_DOCKER_CLI_BUILD": "1",
 	},
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
+		// Use 443 port directly
+		"github.codespaces.usePortForwardingServiceForHTTPS": false,
+		// Python
 		"python.pythonPath": "/usr/local/bin/python",
 		"python.languageServer": "Pylance",
 		"python.linting.enabled": true,
@@ -49,12 +52,7 @@
 	],
 	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [ 443 ],
-	"portsAttributes": {
-		"4443": {
-			 "label": "HTTPS Mac",
-		},
-	 },
+	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "bash .devcontainer/post_create_command.sh",

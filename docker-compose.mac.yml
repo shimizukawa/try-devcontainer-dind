@@ -1,5 +1,0 @@
-services:
-  nginx:
-    ports:
-      - 4443:443
-      - 4444:443

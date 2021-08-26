@@ -30,6 +30,7 @@ Visual Studio Code の devcontainer 設定
     * ghcrのアクセス権がprivateの場合は、secretsにPATを設定しておく必要がある
         * 参考: https://docs.github.com/en/codespaces/codespaces-reference/allowing-your-codespace-to-access-a-private-image-registry
     * `containerEnv` でBUILDKITを有効化し、コンテナ内でのdocker buildを高速化
+    * `settings` でCodespacesのHTTPS通信をURL付きで転送する機能を無効化
 
 * `docker-compose.build.yml`
     * `cache_from` でghcrのキャッシュを参照、BUILDKIT有効化済みのため必要なキャッシュのみ取得
@@ -41,7 +42,7 @@ Visual Studio Code の devcontainer 設定
 
 ## 制限事項 & TODO
 
-* Mac側では443ポートを開けないため、pfによるポート転送設定行う必要があります（手順用意します）
+* Mac側では443ポート（特権ポート）を直接開けないため、一度別のポートにマッピングされます。手動で443を指定すればSudo確認ダイアログが表示されるので、許可してください。
 * `certs/` の配置は手動で行う必要があります（secretsで自動化予定）
 * コード補完の設定が途中です（特にReact）
 * コード補完のためだけにdevcontainerにnode, pythonを入れる必要はあるのか？
