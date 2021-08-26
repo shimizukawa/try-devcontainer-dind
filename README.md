@@ -38,11 +38,10 @@ Visual Studio Code の devcontainer 設定
 * `.devcontainer/post_create_command.sh`
     * docker-compose の初回ビルドで `docker-compose.build.yml` を使いghcrのキャッシュ利用
     * docker-compose の `--parallel` オプションで並列実行
-
+    * GitHub Secrets から $HTTP_CERTS を参照し、証明書を `certs/` に自動配置
 
 ## 制限事項 & TODO
 
 * Mac側では443ポート（特権ポート）を直接開けないため、一度別のポートにマッピングされます。手動で443を指定すればSudo確認ダイアログが表示されるので、許可してください。
-* `certs/` の配置は手動で行う必要があります（secretsで自動化予定）
 * コード補完の設定が途中です（特にReact）
 * コード補完のためだけにdevcontainerにnode, pythonを入れる必要はあるのか？
