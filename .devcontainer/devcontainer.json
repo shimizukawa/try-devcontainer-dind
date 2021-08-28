@@ -1,18 +1,16 @@
 {
-	"name": "Docker in Docker",
-	"image": "ghcr.io/beproud/try-devcontainer-dind/devcontainer:latest",
-	// "image": "ghcr.io/${localEnv:RepositoryName}${localEnv:REPOSITORY_NAME}/devcontainer:latest",
-	// "build": {
-	// 	"dockerfile": "Dockerfile",
-	// 	"context": "..",
-	// 	"args": { 
-	// 			"PYTHON_VERSION": "3.9",
-	// 			"NODE_VERSION": "14",
-	// 	},
-	// },
-	"runArgs": ["--init", "--privileged"],
-	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
+	"name": "GitHub Codespaces (py39)",
+	"image": "ghcr.io/beproud/try-devcontainer-dind/dev-msbase:latest",
+	"remoteUser": "codespace",
 	"overrideCommand": false,
+	"mounts": ["source=codespaces-linux-var-lib-docker,target=/var/lib/docker,type=volume"],
+	"runArgs": [
+		"--cap-add=SYS_PTRACE",
+		"--security-opt",
+		"seccomp=unconfined",
+		"--privileged",
+		"--init"
+	],
 	
 	"containerEnv": {
 		// BuildKitについて https://qiita.com/tatsurou313/items/ad86da1bb9e8e570b6fa
@@ -42,6 +40,7 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
+		"GitHub.vscode-pull-request-github",
 		"ms-azuretools.vscode-docker",
 		"ms-python.python",
 		"ms-python.vscode-pylance",
@@ -56,7 +55,4 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "bash .devcontainer/post_create_command.sh",
-
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "vscode"
 }
