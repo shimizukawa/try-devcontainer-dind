@@ -1,19 +1,13 @@
 name: docker-build
 # refs: https://github.com/marketplace/actions/build-and-push-docker-images
-on:
-  push:
-    branches:
-      - "main"
-      - "ms-base"
+on: push
 
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - uses: docker/setup-qemu-action@v1
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -24,6 +18,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push (devcontainer)
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: .devcontainer/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}/dev-msbase:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build and push (backend)
         uses: docker/build-push-action@v2
@@ -54,13 +58,3 @@ jobs:
           tags: ghcr.io/${{ github.repository }}/nginx:latest
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/nginx:latest
           cache-to: type=inline
-
-      - name: Build and push (devcontainer)
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: .devcontainer/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository }}/dev-msbase:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
