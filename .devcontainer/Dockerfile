@@ -1,11 +1,8 @@
-# use cached image on codespaces
-# see https://github.com/microsoft/vscode-dev-containers/tree/main/containers/codespaces-linux#description
-FROM mcr.microsoft.com/vscode/devcontainers/universal:1-linux
+# use cached image on codespaces + py39
+# see https://github.com/beproud/codespaces/tree/main/universal-py39
+FROM ghcr.io/beproud/codespaces/universal-py39:latest
 
 USER root
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends python3.9 \
-    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # # Setup default python tools in a venv via pipx to avoid conflicts
 # ENV PIPX_HOME=/usr/local/py-utils \

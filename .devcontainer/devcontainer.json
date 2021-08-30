@@ -1,6 +1,6 @@
 {
 	"name": "GitHub Codespaces (py39)",
-	"image": "ghcr.io/beproud/try-devcontainer-dind/dev-msbase:latest",
+	"image": "ghcr.io/beproud/codespaces/universal-py39:latest",
 	"remoteUser": "codespace",
 	"overrideCommand": false,
 	"mounts": ["source=codespaces-linux-var-lib-docker,target=/var/lib/docker,type=volume"],
