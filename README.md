@@ -9,7 +9,16 @@ Visual Studio Code の devcontainer 設定
 1. GitHub リポジトリでCodeボタンからCodespaceを起動してください
 2. `docker-compose up -d` でDockerが起動します
 
+## 制限事項
+
+* Mac側では443ポート（特権ポート）を直接開けないため、一度別のポートにマッピングされます。手動で443を指定すればSudo確認ダイアログが表示されるので、許可してください。
+
+## TODO
+
+* コード補完の設定が途中です（特にReact）
+
 ## 技術
+
 以下それぞれの設定で、8分->2分に短縮
 
 * 適用前: devcontainerのビルド&起動に4分、docker-compose buildに4分
@@ -39,9 +48,3 @@ Visual Studio Code の devcontainer 設定
     * docker-compose の初回ビルドで `docker-compose.build.yml` を使いghcrのキャッシュ利用
     * docker-compose の `--parallel` オプションで並列実行
     * GitHub Secrets から $HTTP_CERTS を参照し、証明書を `certs/` に自動配置
-
-## 制限事項 & TODO
-
-* Mac側では443ポート（特権ポート）を直接開けないため、一度別のポートにマッピングされます。手動で443を指定すればSudo確認ダイアログが表示されるので、許可してください。
-* コード補完の設定が途中です（特にReact）
-* コード補完のためだけにdevcontainerにnode, pythonを入れる必要はあるのか？
