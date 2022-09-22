@@ -1,8 +1,16 @@
 Visual Studio Code の devcontainer 設定
 ============================================
 
+## 概要
+
 * Visual Studio Code 環境で、devcontainerによる開発が行えます
 * GitHub Codespaces でこのdevcontainerを使うことを想定しています
+
+## 参照情報
+
+- blog: https://code.visualstudio.com/blogs/2022/09/15/dev-container-features
+- base image: https://github.com/devcontainers/images/tree/main/src/python
+- features: https://github.com/devcontainers/features/tree/main/src
 
 ## 利用手順
 
