@@ -15,7 +15,7 @@ Visual Studio Code の devcontainer 設定
 ## 利用手順
 
 1. GitHub リポジトリでCodeボタンからCodespaceを起動してください
-2. `docker-compose up -d` でDockerが起動します
+2. `.devcontainer/post_start_command.sh` で docker compose が起動しています。 `docker compose ps` で確認してください。
 
 ## 制限事項
 
@@ -27,15 +27,9 @@ Visual Studio Code の devcontainer 設定
 
 ## 技術
 
-以下それぞれの設定で、8分->2分に短縮
-
-* 適用前: devcontainerのビルド&起動に4分、docker-compose buildに4分
-* 適用後: devcontainerの起動に1分弱、docker-compose buildに1分
-
-設定内容
-
 * `.github/workflows/docker-build.yml`
-    * devcontainerとその中で使うdockerイメージをビルドし、ghcrへpush
+    * devcontainerのビルド時間短縮のため、いくつか対策しています。
+    * devcontainerの中で使うdockerイメージをビルドし、ghcrへpush
         * 参考: https://github.com/marketplace/actions/build-and-push-docker-images
     * ビルド時にcacheすることで次回以降を高速化
         * 参考: https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#inline-cache
@@ -43,16 +37,17 @@ Visual Studio Code の devcontainer 設定
         * 参考: https://qiita.com/tatsurou313/items/ad86da1bb9e8e570b6fa
 
 * `.devcontainer/devcontainer.json`
-    * ghcrのビルド済みイメージを使ってdevコンテナを起動
-    * ghcrのアクセス権がprivateの場合は、secretsにPATを設定しておく必要がある
-        * 参考: https://docs.github.com/en/codespaces/codespaces-reference/allowing-your-codespace-to-access-a-private-image-registry
+    * GitHub Codespacesの設定でprebuildしておく
     * `containerEnv` でBUILDKITを有効化し、コンテナ内でのdocker buildを高速化
     * `settings` でCodespacesのHTTPS通信をURL付きで転送する機能を無効化
 
-* `docker-compose.build.yml`
+* `compose.build.yml`
     * `cache_from` でghcrのキャッシュを参照、BUILDKIT有効化済みのため必要なキャッシュのみ取得
 
 * `.devcontainer/post_create_command.sh`
-    * docker-compose の初回ビルドで `docker-compose.build.yml` を使いghcrのキャッシュ利用
-    * docker-compose の `--parallel` オプションで並列実行
+    * docker compose の初回ビルドで `compose.build.yml` を使いghcrのキャッシュ利用
+    * docker compose の `--parallel` オプションで並列実行
     * GitHub Secrets から $HTTP_CERTS を参照し、証明書を `certs/` に自動配置
+
+* `.devcontainer/post_start_command.sh`
+    * devcontainer起動時にdocker composeを起動
